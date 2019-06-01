@@ -4,27 +4,32 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   devtool: "inline-source-map",
-  entry: "./src/index.js",
+  entry: "./src/index.tsx",
   mode: "development",
   module: {
     rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /(node_modules|bower_components)/,
-        use: ["babel-loader", "eslint-loader"]
-      },
-      {
-        test: /\.(js|jsx)$/,
-        use: "react-hot-loader/webpack",
-        include: /node_modules/
-      },
+      // {
+      //   test: /\.(js|jsx)$/,
+      //   exclude: /(node_modules|bower_components)/,
+      //   use: ["babel-loader", "eslint-loader"]
+      // },
+      // {
+      //   test: /\.(js|jsx)$/,
+      //   use: "react-hot-loader/webpack",
+      //   include: /node_modules/
+      // },
       {
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
-      }
+      },
+      // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
+      { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+
+      // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
+      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
     ]
   },
-  resolve: { extensions: ["*", ".js", ".jsx"] },
+  resolve: { extensions: ["*", ".ts", ".tsx", ".js", ".jsx"] },
   output: {
     path: path.resolve(__dirname, "build/"),
     publicPath: "/build/",
